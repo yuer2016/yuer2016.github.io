@@ -4,7 +4,26 @@
   
     
     <entry>
-      <title>Hello World</title>
+      <title>docker 安装 mysql5.7</title>
+      <link href="/2021/07/25/docker-%E5%AE%89%E8%A3%85-mysql5-7/"/>
+      <url>/2021/07/25/docker-%E5%AE%89%E8%A3%85-mysql5-7/</url>
+      
+        <content type="html"><![CDATA[<p>1.拉取官方镜像(我们这里选择5.7,如果不写后面的版本号则会自动拉取最新版）</p><pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull mysql:5.7</span><br></pre></td></tr></table></figure></code></pre><p>2.检查是否拉取成功</p><pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker images </span><br></pre></td></tr></table></figure></code></pre><p>3.一般来说数据库容器不需要建立目录映射</p><pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7</span><br></pre></td></tr></table></figure></code></pre><p>–name：容器名，此处命名为mysql<br>-e：配置信息，此处配置mysql的root用户的登陆密码<br>-p：端口映射，此处映射 主机3306端口 到 容器的3306端口<br>-d：后台运行容器，保证在退出终端后容器继续运行</p><p>4.检查容器是否正确运行 </p><pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker container ls</span><br></pre></td></tr></table></figure></code></pre><p>5.进入docker本地连接mysql客户端</p><pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker <span class="built_in">exec</span> -it mysql bash mysql -uroot -p123456</span><br></pre></td></tr></table></figure></code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> docker mysql </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>hexo使用教程</title>
       <link href="/2021/07/25/hello-world/"/>
       <url>/2021/07/25/hello-world/</url>
       

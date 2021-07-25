@@ -6,7 +6,7 @@
   <link href="https://yuer2016.github.io/atom.xml" rel="self"/>
   
   <link href="https://yuer2016.github.io/"/>
-  <updated>2021-07-25T11:58:47.388Z</updated>
+  <updated>2021-07-25T13:26:32.134Z</updated>
   <id>https://yuer2016.github.io/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Hello World</title>
+    <title>docker 安装 mysql5.7</title>
+    <link href="https://yuer2016.github.io/2021/07/25/docker-%E5%AE%89%E8%A3%85-mysql5-7/"/>
+    <id>https://yuer2016.github.io/2021/07/25/docker-%E5%AE%89%E8%A3%85-mysql5-7/</id>
+    <published>2021-07-25T13:10:48.000Z</published>
+    <updated>2021-07-25T13:26:32.134Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.拉取官方镜像(我们这里选择5.7,如果不写后面的版本号则会自动拉取最新版）</p><pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull mysql:5.7</span><br></pre></td></tr></table></figure></code></pre><p>2.检查是否拉取成功</p><pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker images </span><br></pre></td></tr></table></figure></code></pre><p>3.一般来说数据库容器不需要建立目录映射</p><pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7</span><br></pre></td></tr></table></figure></code></pre><p>–name：容器名，此处命名为mysql<br>-e：配置信息，此处配置mysql的root用户的登陆密码<br>-p：端口映射，此处映射 主机3306端口 到 容器的3306端口<br>-d：后台运行容器，保证在退出终端后容器继续运行</p><p>4.检查容器是否正确运行 </p><pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker container ls</span><br></pre></td></tr></table></figure></code></pre><p>5.进入docker本地连接mysql客户端</p><pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker <span class="built_in">exec</span> -it mysql bash mysql -uroot -p123456</span><br></pre></td></tr></table></figure></code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;1.拉取官方镜像(我们这里选择5.7,如果不写后面的版本号则会自动拉取最新版）&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;lin</summary>
+      
+    
+    
+    
+    
+    <category term="docker mysql" scheme="https://yuer2016.github.io/tags/docker-mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hexo使用教程</title>
     <link href="https://yuer2016.github.io/2021/07/25/hello-world/"/>
     <id>https://yuer2016.github.io/2021/07/25/hello-world/</id>
     <published>2021-07-25T11:58:47.388Z</published>
-    <updated>2021-07-25T11:58:47.388Z</updated>
+    <updated>2021-07-25T13:26:59.600Z</updated>
     
     <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
     
