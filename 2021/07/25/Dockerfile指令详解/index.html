@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><meta name="theme-color" content="#2d4356"><meta name="baidu-site-verification"><title>Dockerfile指令详解 | 小鱼儿博客</title><link rel="stylesheet" type="text/css" href="/css/style.css"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.png"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="小鱼儿博客" type="application/atom+xml">
+</head><link rel="stylesheet" type="text/css" href="/plugins/highlight/atom-one-dark.min.css"><script type="text/javascript" src="/plugins/highlight/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();
+</script><script type="text/javascript" src="/js/ready.js" async></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"><body class="night"><div class="mobile-head" id="mobile-head"><div class="navbar-icon"><span></span><span></span><span></span></div><div class="navbar-title"><a href="/">LITREILY</a></div><div class="navbar-search"><!--= show a circle here--></div></div><div class="h-wrapper" id="menu"><nav class="h-head box"><div class="m-hdimg"><a class="hdimg img" href="/"><img class="nofancybox" src="/img/profile.jpg" width="128" height="128"></a><h1 class="ttl"><a href="/">小鱼儿博客</a></h1></div><p class="m-desc">是非，审之于己；毁誉，听之于人； 得失，安之于数；</p><div class="m-nav"><ul><li><span class="dot">●</span><a href="/archives/">归档</a></li><li><span class="dot">●</span><a href="/categories/">分类</a></li><li><span class="dot">●</span><a href="/tags/">标签</a></li><li><span class="dot">●</span><a href="/about/">关于</a></li><li><span class="dot">●</span><a href="/atom.xml">RSS</a></li><li class="m-sch"><form class="form" id="j-formsch" method="get"><input class="txt" type="text" id="local-search-input" name="q" value="搜索" onfocus="if(this.value=='搜索'){this.value='';}" onblur="if(this.value==''){this.value='搜索';}"><input type="text" style="display:none;"></form></li></ul><div id="local-search-result"></div></div></nav></div><div id="back2Top"><a class="fa fa-arrow-up" title="Back to top" href="#"></a></div><div class="box" id="container"><div class="l-wrapper"><div class="l-content box"><div class="l-post l-post-art"><article class="p-art"><div class="p-header box"><h1 class="p-title">Dockerfile指令详解</h1><div class="p-info"><span class="p-date"><i class="fa fa-calendar"></i><a href="/2021/07/25/Dockerfile%E6%8C%87%E4%BB%A4%E8%AF%A6%E8%A7%A3/">2021-07-25</a></span><span class="p-view" id="busuanzi_container_page_pv"><i class="fa fa-eye"></i><span id="busuanzi_value_page_pv"></span></span></div></div><div class="p-content"><p>Dockfile是一种被Docker程序解释的脚本，Dockerfile由一条一条的指令组成，每条指令对应Linux下面的一条命令。Docker程序将这些Dockerfile指令翻译真正的Linux命令。Dockerfile有自己书写格式和支持的命令，Docker程序解决这些命令间的依赖关系，类似于Makefile。Docker程序将读取Dockerfile，根据指令生成定制的image。相比image这种黑盒子，Dockerfile这种显而易见的脚本更容易被使用者接受，它明确的表明image是怎么产生的。有了Dockerfile，当我们需要定制自己额外的需求时，只需在Dockerfile上添加或者修改指令，重新生成image即可，省去了敲命令的麻烦。<br>在 Dockerfile 中用到的命令有：</p>
+<h3 id="FROM"><a href="#FROM" class="headerlink" title="FROM"></a>FROM</h3><p>FROM指定一个基础镜像， 一般情况下一个可用的 Dockerfile一定是 FROM 为第一个指令。至于image则可以是任何合理存在的image镜像。<br>FROM 一定是首个非注释指令 Dockerfile.<br>FROM 可以在一个 Dockerfile 中出现多次，以便于创建混合的images。<br>如果没有指定 tag ，latest 将会被指定为要使用的基础镜像版本。</p>
+<h3 id="MAINTAINER"><a href="#MAINTAINER" class="headerlink" title="MAINTAINER"></a>MAINTAINER</h3><p>这里是用于指定镜像制作者的信息</p>
+<h3 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h3><p>RUN命令将在当前image中执行任意合法命令并提交执行结果。命令执行提交后，就会自动执行Dockerfile中的下一个指令。<br>层级 RUN 指令和生成提交是符合Docker核心理念的做法。它允许像版本控制那样，在任意一个点，对image 镜像进行定制化构建。<br>RUN 指令缓存不会在下个命令执行时自动失效。比如 RUN apt-get dist-upgrade -y 的缓存就可能被用于下一个指令. –no-cache 标志可以被用于强制取消缓存使用。</p>
+<h3 id="ENV"><a href="#ENV" class="headerlink" title="ENV"></a>ENV</h3><p>ENV指令可以用于为docker容器设置环境变量<br>ENV设置的环境变量，可以使用 docker inspect命令来查看。同时还可以使用docker run –env <key>=<value>来修改环境变量。</p>
+<h3 id="USER"><a href="#USER" class="headerlink" title="USER"></a>USER</h3><p>USER 用来切换运行属主身份的。Docker 默认是使用 root，但若不需要，建议切换使用者身分，毕竟 root 权限太大了，使用上有安全的风险。</p>
+<h3 id="WORKDIR"><a href="#WORKDIR" class="headerlink" title="WORKDIR"></a>WORKDIR</h3><p>WORKDIR 用来切换工作目录的。Docker 默认的工作目录是/，只有 RUN 能执行 cd 命令切换目录，而且还只作用在当下下的 RUN，也就是说每一个 RUN 都是独立进行的。如果想让其他指令在指定的目录下执行，就得靠 WORKDIR。WORKDIR 动作的目录改变是持久的，不用每个指令前都使用一次 WORKDIR。</p>
+<h3 id="COPY"><a href="#COPY" class="headerlink" title="COPY"></a>COPY</h3><p>COPY 将文件从路径 <src> 复制添加到容器内部路径 <dest>。</p>
+<src>
+必须是想对于源文件夹的一个文件或目录，也可以是一个远程的url，<dest>
+是目标容器中的绝对路径。
+所有的新文件和文件夹都会创建UID 和 GID 。事实上如果 <src> 是一个远程文件URL，那么目标文件的权限将会是600。
+
+<h3 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h3><p>ADD 将文件从路径 <src> 复制添加到容器内部路径 <dest>。</p>
+<p><src> 必须是想对于源文件夹的一个文件或目录，也可以是一个远程的url。<dest> 是目标容器中的绝对路径。<br>所有的新文件和文件夹都会创建UID 和 GID。事实上如果 <src> 是一个远程文件URL，那么目标文件的权限将会是600。</p>
+<p>##VOLUME<br>创建一个可以从本地主机或其他容器挂载的挂载点，一般用来存放数据库和需要保持的数据等。</p>
+<h3 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h3><p>EXPOSE 指令指定在docker允许时指定的端口进行转发。</p>
+<h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><p>Dockerfile.中只能有一个CMD指令。 如果你指定了多个，那么最后个CMD指令是生效的。<br>CMD指令的主要作用是提供默认的执行容器。这些默认值可以包括可执行文件，也可以省略可执行文件。<br>当你使用shell或exec格式时， CMD<br>会自动执行这个命令。</p>
+<h3 id="ONBUILD"><a href="#ONBUILD" class="headerlink" title="ONBUILD"></a>ONBUILD</h3><p>ONBUILD 的作用就是让指令延迟執行，延迟到下一个使用 FROM 的 Dockerfile 在建立 image 时执行，只限延迟一次。<br>ONBUILD 的使用情景是在建立镜像时取得最新的源码 (搭配 RUN) 与限定系统框架。</p>
+<h3 id="ARG"><a href="#ARG" class="headerlink" title="ARG"></a>ARG</h3><p>ARG是Docker1.9 版本才新加入的指令。<br>ARG 定义的变量只在建立 image 时有效，建立完成后变量就失效消失</p>
+<h3 id="LABEL"><a href="#LABEL" class="headerlink" title="LABEL"></a>LABEL</h3><p>定义一个 image 标签 Owner，并赋值，其值为变量 Name 的值。(LABEL Owner=$Name )</p>
+<h3 id="ENTRYPOINT"><a href="#ENTRYPOINT" class="headerlink" title="ENTRYPOINT"></a>ENTRYPOINT</h3><p>是指定 Docker image 运行成 instance (也就是 Docker container) 时，要执行的命令或者文件。</p>
+<p>注意：</p>
+<p>CMD 和 ENTRYPOINT 都能用来指定开始运行的程序，而且这两个命令都有两种不用的语法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CMD ls -l</span><br><span class="line">OR</span><br><span class="line">CMD [<span class="string">&quot;ls&quot;</span>,<span class="string">&#x27;&#x27;</span>-l<span class="string">&quot;]</span></span><br></pre></td></tr></table></figure>
+<p>对于第一种语法，docker 会自动加入“/bin/sh –c”到命令中，这样就有可能导致意想不到的行为。为了避免这种行为，我们推荐所有的 CMD 和 ENTRYPOINT 都应该使用第二种语法。<br>如果两个同时使用，请确定确定他们的含义没有错误。一般来说需要两个同时使用的情况只有 ENTRYPOINT 指定需要运行的 binary，CMD 给出运行的默认参数。</p>
+<p><strong>尽量合并命令</strong></p>
+<p>Dockerfile 中的每一个命令都会创建一个新的 layer，而一个容器能够拥有的最多 layer 数是有限制的。所以尽量将逻辑上连贯的命令合并可以减少 layer的层数，合并命令的方法可以包括将多个可以合并的命令（EXPOSE， ENV，VOLUME，COPY）合并。<br>Dockerfile 中的每一个命令都会创建一个新的 layer，而一个容器能够拥有的最多 layer 数是有限制的。所以尽量将逻辑上连贯的命令合并可以减少 layer 的层数，这也可以加快编译速度。<br>将多个可以合并的命令（RUN,EXPOSE, ENV,VOLUME,COPY）合并，比如：</p>
+<p>合并前：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">EXOISE 80</span><br><span class="line">EXOISE 8080</span><br><span class="line">CMD <span class="built_in">cd</span> /tmp</span><br><span class="line">CMD ls</span><br></pre></td></tr></table></figure>
+
+<p>合并后：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EXOISE 80 8080</span><br><span class="line">CMD <span class="built_in">cd</span> /tmp &amp;&amp; ls</span><br></pre></td></tr></table></figure>
+<p>ADD命令和 COPY 命令在很大层度上功能是一样的。但是 COPY 语义更加直接，所以我们推荐尽量使用 COPY 命令。唯一例外的是 ADD 命令自带解压功能，如果需要拷贝并解压一个文件到镜像中，那么我们可以使用 ADD 命令。除此之外，我们都推荐使用 COPY 命令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ADD 1.1.1.100:1234/jdk-8u74-linux-x64.tar.gz /usr/<span class="built_in">local</span>/</span><br></pre></td></tr></table></figure>
+<p>USER的使用<br>Docker 默认所有的应用都会跑在容器的 root user 底下，但是这样会造成一些潜在的安全隐患。在 production 环境跑的 Container 最好是通过USER命令跑在非特权用户底下。</p>
+</div><div class="p-copyright"><blockquote><div class="p-copyright-author"><span class="p-copyright-key">本文作者：</span><span class="p-copytight-value"><a href="mailto:litreily@163.com">John Doe</a></span></div><div class="p-copyright-link"><span class="p-copyright-key">本文链接：</span><span class="p-copytight-value"><a href="/2021/07/25/Dockerfile%E6%8C%87%E4%BB%A4%E8%AF%A6%E8%A7%A3/">https://yuer2016.github.io/2021/07/25/Dockerfile指令详解/</a></span></div><div class="p-copyright-note"><span class="p-copyright-key">版权声明：</span><span class="p-copytight-value">本博客所有文章除特殊声明外，均采用<a rel="nofollow" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/"> CC BY-NC 4.0 </a>许可协议。转载请注明出处 <a href="https://yuer2016.github.io">John Doe的博客</a>！</span></div></blockquote></div></article><div class="p-info box"><span class="p-tags"><i class="fa fa-tag"></i><a href="/tags/docker/">docker</a></span></div><aside id="toc"><div class="toc-title">目录</div><nav><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#FROM"><span class="toc-number">1.</span> <span class="toc-text">FROM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MAINTAINER"><span class="toc-number">2.</span> <span class="toc-text">MAINTAINER</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RUN"><span class="toc-number">3.</span> <span class="toc-text">RUN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ENV"><span class="toc-number">4.</span> <span class="toc-text">ENV</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#USER"><span class="toc-number">5.</span> <span class="toc-text">USER</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WORKDIR"><span class="toc-number">6.</span> <span class="toc-text">WORKDIR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#COPY"><span class="toc-number">7.</span> <span class="toc-text">COPY</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ADD"><span class="toc-number">8.</span> <span class="toc-text">ADD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXPOSE"><span class="toc-number">9.</span> <span class="toc-text">EXPOSE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CMD"><span class="toc-number">10.</span> <span class="toc-text">CMD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ONBUILD"><span class="toc-number">11.</span> <span class="toc-text">ONBUILD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ARG"><span class="toc-number">12.</span> <span class="toc-text">ARG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LABEL"><span class="toc-number">13.</span> <span class="toc-text">LABEL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ENTRYPOINT"><span class="toc-number">14.</span> <span class="toc-text">ENTRYPOINT</span></a></li></ol></nav></aside></div><section class="p-ext"><div class="l-pager l-pager-dtl box"><a class="prev" href="/2021/07/25/Redis%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E4%B8%80%E8%A7%88/">&lt; Redis常用命令一览</a><a class="next" href="/2021/07/25/OpenResty-%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2Vue-%E5%89%8D%E7%AB%AF/">OpenResty 安装部署Vue 前端 &gt;</a></div><div id="valine-comment"><style type="text/css">.night .v[data-class=v] a { color: #0F9FB4 !important; }
+.night .v[data-class=v] a:hover { color: #216C73 !important; }
+.night .v[data-class=v] li { list-style: inherit; }
+.night .v[data-class=v] .vwrap { border: 1px solid #223441; border-radius: 0; }
+.night .v[data-class=v] .vwrap:hover { box-shadow: 0 0 6px 1px #223441; }
+.night .v[data-class=v] .vbtn { border-radius: 0; background: none; }
+.night .v[data-class=v] .vlist .vcard .vh { border-bottom-color: #293D4E; }
+.night .v[data-class=v] .vwrap .vheader .vinput { border-bottom-color: #223441; }
+.night .v[data-class=v] .vwrap .vheader .vinput:focus { border-bottom-color: #339EB4; }
+.night .v[data-class=v] code, .night .v[data-class=v] pre,.night .v[data-class=v] .vlist .vcard .vhead .vsys { background: #203240 !important; }
+.night .v[data-class=v] code, .night .v[data-class=v] pre { color: #F0F0F0; font-size: 95%; }
+.v[data-class=v] .vcards .vcard .vh {border-bottom-color: #223441; }
+.night .v[data-class=v] .vcards .vcard .vcontent.expand:before {background: linear-gradient(180deg,rgba(38,57,73,.4),rgba(38,57,73,.9));}
+.night .v[data-class=v] .vcards .vcard .vcontent.expand:after {background: rgba(38,57,73,.9)}
+</style><div id="vcomment"></div><script src="//cdn.bootcdn.net/ajax/libs/valine/1.4.14/Valine.min.js"></script><script>var notify = 'false' == true ? true : false;
+var verify = 'false' == true ? true : false;
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  appId:'',
+  appKey:'',
+  lang: 'zh-cn',
+  placeholder:'ヾﾉ≧∀≦)o Come on, say something...',
+  avatar:'identicon',
+  guest_info:guest_info,
+  pageSize:'10'
+})</script></div></section><footer><p>Copyright © 2016 - 2021 <a href="/." rel="nofollow">小鱼儿博客</a> | <strong><a rel="nofollow" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a></strong><br><span id="busuanzi_container_site_uv"><i class="fa fa-user"></i><span id="busuanzi_value_site_uv"></span></span> <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i><span id="busuanzi_value_site_pv"></span></span> | Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a>Theme with<a rel="nofollow" target="_blank" href="https://github.com/litreily/snark-hexo"> snark.</a></p></footer></div></div></div><script type="text/javascript" src="/js/search.js"></script><script type="text/javascript" src="/js/top.js"></script><script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+    search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.1" async></script></body></html>
